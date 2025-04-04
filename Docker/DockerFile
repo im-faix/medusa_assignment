@@ -2,6 +2,7 @@ FROM node:18-alpine
 
 WORKDIR /app
 
+# Clone medusa backend
 RUN npm install -g @medusajs/medusa-cli
 
 RUN medusa new my-medusa-app --starter --no-git && \
