@@ -119,4 +119,3 @@ resource "aws_ecs_service" "medusa" {
     assign_public_ip = true
   }
 }
-
