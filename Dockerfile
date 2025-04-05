@@ -1,26 +1,20 @@
-# Use official Node.js Alpine base
+# Use official Node.js Alpine base image
 FROM node:18-alpine
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Install Medusa CLI
-RUN npm install -g medusa-cli
+# Copy project files (make sure your medusa-config.js, package.json etc. are in the root)
+COPY . .
 
-# Create a Medusa project inside the container
-RUN medusa new medusa-server --seed --skip-install
+# Install dependencies (using legacy-peer-deps can help resolve dependency conflicts)
+RUN npm install --legacy-peer-deps
 
-# Set new directory as working directory
-WORKDIR /app/medusa-server
-
-# Install dependencies
-RUN npm install
-
-# Build project
+# Build the project
 RUN npm run build
 
-# Expose Medusa default port
+# Expose Medusa default port (adjust if you are using a different port)
 EXPOSE 9000
 
-# Run the Medusa server
+# Start the Medusa server
 CMD ["npm", "run", "start"]
