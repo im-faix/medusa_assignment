@@ -31,7 +31,7 @@ jobs:
 
       - name: Build, Tag, and Push image to ECR
         run: |
-          docker build -t medusa-backend ./Docker/.  
+          docker build -t medusa-backend .  
 
       - name: Force new ECS deploy
         run: |
