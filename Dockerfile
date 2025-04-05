@@ -1,30 +1,26 @@
-# Use official Node.js Alpine image
+# Use official Node.js Alpine base
 FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
 
-# Install required packages
-RUN apk add --no-cache libc6-compat
-
-# Install Medusa CLI globally
+# Install Medusa CLI
 RUN npm install -g medusa-cli
 
-# Create new Medusa server (if not using git clone)
-# Optional if you're cloning it
-# RUN medusa new medusa-server --seed
+# Create a Medusa project inside the container
+RUN medusa new medusa-server --seed --skip-install
 
-# Copy local source
-COPY . .
+# Set new directory as working directory
+WORKDIR /app/medusa-server
 
 # Install dependencies
 RUN npm install
 
-# Build the project
+# Build project
 RUN npm run build
 
-# Expose the default Medusa port
+# Expose Medusa default port
 EXPOSE 9000
 
-# Start the server
+# Run the Medusa server
 CMD ["npm", "run", "start"]
